@@ -1,0 +1,91 @@
+{% extends 'layout_boxed.html.twig' %}
+
+{% block title %}
+    {{ location.name }} Forecast
+{% endblock %}
+
+{% block content %}
+
+    <div class="row mt-3">
+        <div class="col">
+            <h1>Forecast for {{ location.name }}, {{ location.countryCode }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div id="map" class=forecast-card style="height: 180px;">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3 forecasts">
+    {% for forecast in forecasts %}
+        <div class="col-12 col-lg-6">
+            <div class="forecast-card">
+                <div class="row">
+                    <div class="forecast-card-header col-12 d-flex justify-content-between align-items-center">
+                        <div class="day">{{ forecast.date | date('l') }}</div>
+                        <div class="date">{{ forecast.date | date('d.m') }}</div>
+                    </div>
+                    <div class="forecast-card-general col-12 col-lg-6">
+                        <div class="row">
+                            <div class="col-6 text-center" >
+                                <i class="bi bi-{{ forecast.icon }} forecast-icon"></i>
+                            </div>
+                            <div class="col-6">
+                                <div class="temperature">{{ forecast.temperature }}&deg;</div>
+                                <div class="feels-like">Feels like {{ forecast.feelsLike }}&deg;</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="forecast-card-details col-12 col-lg-6 mt-3">
+                        <dl>
+                            <dt>Pressure</dt>
+                            <dd>{{ forecast.pressure }}</dd>
+
+                            <dt>Humidity</dt>
+                            <dd>{{ forecast.humidity }}</dd>
+
+                            <dt>Wind</dt>
+                            <dd>{{ forecast.windSpeed }}</dd>
+
+                            <dt>Cloudiness</dt>
+                            <dd>{{ forecast.cloudiness }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+    </div>
+
+    <script>
+        var map = L.map('map').setView([{{ location.latitude }}, {{ location.longitude }}], 12);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        var marker = L.marker([{{ location.latitude }}, {{ location.longitude }}]).addTo(map);
+
+    </script>
+
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+{% endblock %}

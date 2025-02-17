@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <nav class="navbar navbar-expand bg-dark border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ path('app_staticinfo_home') }}">Weather forecasts</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Locations
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('app_weather_forecast', {countryCode: 'PL', cityName: 'Stettin'}) }}">Stettin</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_weather_forecast', {countryCode: 'DE', cityName: 'Berlin'}) }}">Berlin</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_weather_forecast', {countryCode: 'ES', cityName: 'Barcelona'}) }}">Barcelona</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_weather_forecast', {countryCode: 'FR', cityName: 'Paris'}) }}">Paris</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+{% endblock %}
