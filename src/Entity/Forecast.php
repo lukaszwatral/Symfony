@@ -71,6 +71,10 @@ class Forecast
         return $this;
     }
 
+    public function getTemperatureFahrenheit(): ?int {
+        return round(($this->getTemperature() * 9 / 5) + 32);
+    }
+
     public function getFeelsLike(): ?int
     {
         return $this->feelsLike;
@@ -81,6 +85,10 @@ class Forecast
         $this->feelsLike = $feelsLike;
 
         return $this;
+    }
+
+    public function getFeelsLikeFahrenheit(): ?int {
+        return round(($this->getFeelsLike() * 9 / 5) + 32);
     }
 
     public function getPressure(): ?int
